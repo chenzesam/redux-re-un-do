@@ -24,7 +24,6 @@ class Counter extends React.Component {
     })
   }
   render() {
-    console.log(this.props)
     return <div>
       <div>{this.props.counter.count}</div>
       <button onClick={this.handleClickAddButton}>click + 1</button>

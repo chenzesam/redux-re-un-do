@@ -1,15 +1,19 @@
-import { createStore, combineReducers } from 'redux'
-import counterReducer from './counterReducer'
-import { reducer as reUndoReducer } from './redux-re-un-do'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import counterReducer from './counter/counterReducer'
+import reUnDoReducer from './middleware/reducer'
+
+import reUnDo  from './middleware/redux-re-un-do'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
   counter: counterReducer,
-  reUnDo: reUndoReducer
+  reUnDo: reUnDoReducer
 })
 
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(applyMiddleware(reUnDo))
 )
 
 export default store
