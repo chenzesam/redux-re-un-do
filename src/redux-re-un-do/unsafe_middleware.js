@@ -1,3 +1,5 @@
+import { REDO_TYPE, UNDO_TYPE } from './actions'
+
 // 用于存储历史状态, 撤销还原使用, 不会存储到当前状态, 因为只能获取到 action 触发时的那个状态
 const stateStack = []
 
@@ -7,7 +9,7 @@ let vernier = 0
 
 const reUnDo = store => next => action => {
 
-  if (action.type !== 'RE_DO' && action.type !== 'UN_DO') {
+  if (action.type !== REDO_TYPE && action.type !== UNDO_TYPE) {
     // stateStack.length = vernier
 
     // 获取当前状态
@@ -18,7 +20,7 @@ const reUnDo = store => next => action => {
   }
 
   switch (action.type) {
-    case 'RE_DO':
+    case REDO_TYPE:
 
       // 若在做撤回时, 当前游标和状态历史长度相等, 则代表由最新状态往回撤,
       // 因为最新状态没有入栈, 所以需要将最新状态入栈存储起来
@@ -28,13 +30,13 @@ const reUnDo = store => next => action => {
       vernier--
       let preState = stateStack[vernier]
       next({
-        type: 'RE_DO',
+        type: REDO_TYPE,
         payload: {
           ...preState
         }
       })
       break
-    case 'UN_DO':
+    case UNDO_TYPE:
       // 若游标 + 1 等于状态长度, 代表目前在最新状态, 无法做还原操作了
       // if (vernier + 1 === stateStack.length) {
       //   return
@@ -42,7 +44,7 @@ const reUnDo = store => next => action => {
       vernier++
       let nextState = stateStack[vernier]
       next({
-        type: 'UN_DO',
+        type: UNDO_TYPE,
         payload: {
           ...nextState
         }

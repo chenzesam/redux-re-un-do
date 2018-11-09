@@ -1,5 +1,4 @@
-// import { reduxDecoration } from './redux-re-un-do'
-
+import reduxReUnDoReducerHOC from '../redux-re-un-do/reducerHOC'
 const initState = {
   count: 0
 }
@@ -16,29 +15,10 @@ const reducer = (state = initState, action) => {
         ...state,
         count: state.count - 1
       }
-    case 'RE_DO':
-      return {
-        ...state,
-        ...action.payload.counter
-      }
-    case 'UN_DO':
-      return {
-        ...state,
-        ...action.payload.counter
-      }
-    // case 'ADD_RE_DO':
-    //   return {
-    //     ...state,
-    //     count: state.count - 1
-    //   }
-    // case 'ADD_UN_DO':
-    //   return {
-    //     ...state,
-    //   }
     default:
       return state
   }
 }
 
 // export default reduxDecoration(reducer)
-export default reducer
+export default reduxReUnDoReducerHOC(reducer)
